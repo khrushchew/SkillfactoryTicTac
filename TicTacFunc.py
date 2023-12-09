@@ -5,7 +5,8 @@ def check_name(name: str):
     print(f"Спасибо, игрок - {name}")
     return name
 
-#Первое отображение поля
+
+# Первое отображение поля
 def start_field(field):
     for i in range(3):
         if i == 0:
@@ -51,11 +52,15 @@ def start_window():
     return first, second
 
 
-#Вычисление ячейки
+# Ввод хода
 def get_move(player, field):
     while True:
         try:
-            input_str = input(f"{player}, введи номер строки и столбца через пробел: ")
+            input_str = input(f"{player}, введи номер строки и столбца через пробел (для выхода введите 'exit'): ")
+            if input_str.lower() == 'exit':
+                print("Игра завершена.")
+                exit()
+
             coordinates = list(map(int, input_str.split()))
             x, y = coordinates
             if len(coordinates) != 2 or not (0 <= x <= 2 and 0 <= y <= 2) or field[x][y] != " - ":
@@ -65,10 +70,10 @@ def get_move(player, field):
             print(f"Ошибка: Некорректные координаты. Попробуйте ещё раз.")
 
 
-#Заполнение поля и вывод победителя
+# Заполнение поля и вывод победителя
 def main_game(first, second):
     print("\nТеперь начнём игру. Верхняя строка, состоящая из цифр, и левая колонка, также состоящая из цифр, "
-          "позволяет определить ту позицию, куда ты хочешь поставить отметку.\n")
+          "позволяет определить ту позицию, куда ты хочешь поставить отметку. Для выхода введите 'exit'.\n")
 
     field = [[" - " for _ in range(3)] for _ in range(3)]
     winner = None
@@ -85,12 +90,12 @@ def main_game(first, second):
         winner = check_winner(field)
         if winner:
             print(f"Поздравляем! Игрок {second} победил!" if winner == "X" else f"Поздравляем! Игрок {first} победил!")
-            break
+            exit()
 
     if not winner:
         print("Ничья! Игра завершена.")
 
 
-#Вызовы функций
+# Вызовы функций
 a, b = start_window()
 main_game(a, b)
